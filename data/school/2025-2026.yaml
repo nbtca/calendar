@@ -1,0 +1,140 @@
+schema: 1
+academicYear: 2025-2026
+importedFrom: https://ical.nbtca.space/
+events:
+  - id: imported-2025-08-30-a244a69dd1
+    uid: 779C2762-2823-42B1-ADBF-2506102919C5
+    title: 2025级新生报到注册
+    startDate: 2025-08-30
+    endDateExclusive: 2025-08-31
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063131Z
+  - id: imported-2025-08-31-aad7aa0ee7
+    uid: 29FC3232-4589-4B2D-88D6-481D9E709C10
+    title: 军训（2025级）
+    startDate: 2025-08-31
+    endDateExclusive: 2025-09-14
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063134Z
+  - id: imported-2025-09-12-773e406c11
+    uid: 83F13244-CFC6-4F56-B371-9AE4E06B1790
+    title: 老生/研究生报到注册
+    startDate: 2025-09-12
+    endDateExclusive: 2025-09-13
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063136Z
+  - id: imported-2025-09-15-a56f149313
+    uid: 2E77DCF1-7D8F-4866-A990-5755F020AA17
+    title: 秋季学期开始上课
+    startDate: 2025-09-15
+    endDateExclusive: 2025-09-16
+    description: 2025-2026学年第一学期 第1周
+    sequence: 0
+    updatedAt: 20260622T063138Z
+  - id: imported-2025-09-24-d04d2d139d
+    uid: 3CF9106A-1A1F-4170-A4C1-A88D1F2A19A1
+    title: 校庆日
+    startDate: 2025-09-24
+    endDateExclusive: 2025-09-25
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063141Z
+  - id: imported-2025-10-01-f007191bb9
+    uid: F071615C-15C9-45FE-899E-10AF4BED1A85
+    title: 国庆节/中秋节放假
+    startDate: 2025-10-01
+    endDateExclusive: 2025-10-09
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063144Z
+  - id: imported-2025-10-30-6bf1f303ed
+    uid: 8523E602-E0EB-406F-8B36-EC0C5BD02743
+    title: 校运动会
+    startDate: 2025-10-30
+    endDateExclusive: 2025-11-01
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063147Z
+  - id: imported-2026-01-01-619d015f0c
+    uid: CEFC18F3-8013-4A7C-8FCE-E1E8FF887C15
+    title: 元旦放假
+    startDate: 2026-01-01
+    endDateExclusive: 2026-01-04
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063151Z
+  - id: imported-2026-01-14-b1de4d537f
+    uid: 9D663A56-1DEA-41C1-9B52-88E38E71CC74
+    title: 期末考试周
+    startDate: 2026-01-14
+    endDateExclusive: 2026-01-21
+    description: 2025-2026学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063153Z
+  - id: imported-2026-03-06-2b7f03347a
+    uid: FB9649EE-8A27-4C20-A8FF-56B2D34C0A76
+    title: 春季学生报到注册
+    startDate: 2026-03-06
+    endDateExclusive: 2026-03-07
+    description: 2025-2026学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063156Z
+  - id: imported-2026-03-09-e9e341b4e3
+    uid: CFC98E95-40D5-456C-B801-38F68C1735AD
+    title: 春季学期开始上课
+    startDate: 2026-03-09
+    endDateExclusive: 2026-03-10
+    description: 2025-2026学年第二学期 第1周
+    sequence: 0
+    updatedAt: 20260622T063159Z
+  - id: imported-2026-04-05-44c5f19cd4
+    uid: 8239E39B-9137-4DB7-8060-99B753DFAB7B
+    title: 清明节放假
+    startDate: 2026-04-05
+    endDateExclusive: 2026-04-06
+    description: 2025-2026学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063203Z
+  - id: imported-2026-05-01-a9dea56512
+    uid: 3CE37468-8B53-47F1-9D59-5207DCBA6543
+    title: 劳动节放假
+    startDate: 2026-05-01
+    endDateExclusive: 2026-05-02
+    description: 2025-2026学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063205Z
+  - id: imported-2026-06-15-6d2a733872
+    uid: 80FC9651-F038-49F9-AE76-C8B852D737C7
+    title: 毕业典礼暨学位授予仪式
+    startDate: 2026-06-15
+    endDateExclusive: 2026-06-20
+    description: 2025-2026学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063208Z
+  - id: imported-2026-06-19-85b2ecb385
+    uid: EE1788D9-2676-4774-A77A-7EAACF538EDB
+    title: 端午节放假
+    startDate: 2026-06-19
+    endDateExclusive: 2026-06-20
+    description: 2025-2026学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063212Z
+  - id: imported-2026-07-04-47b19a0e98
+    uid: B7004C03-3987-4F3F-8CD3-C7581E6AA189
+    title: 期末考试周
+    startDate: 2026-07-04
+    endDateExclusive: 2026-07-11
+    description: 2025-2026学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063214Z
+  - id: imported-2026-07-11-fe31911d5a
+    uid: D9BB0250-9F8A-4E29-9B96-61F9C3215A98
+    title: 暑期
+    startDate: 2026-07-11
+    endDateExclusive: 2026-09-14
+    description: 两学期之间的漫长充电时间，紧接上学期期末考试周结束，止于下学期开学前一天。休息，是为了走更远的路
+    sequence: 0
+    updatedAt: 20260715T071623Z

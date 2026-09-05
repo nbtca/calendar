@@ -1,0 +1,100 @@
+schema: 1
+academicYear: 2022-2023
+importedFrom: https://ical.nbtca.space/
+events:
+  - id: imported-2022-08-21-cf86138293
+    uid: 76D8BA0F-B7D9-44EA-A92F-C4CFA7135E02
+    title: 军训（2022级新生）
+    startDate: 2022-08-21
+    endDateExclusive: 2022-09-12
+    description: 2022-2023学年第一学期
+    sequence: 0
+    updatedAt: 20260622T062935Z
+  - id: imported-2022-09-12-1c7a3a80f5
+    uid: 1BA424FC-2349-424D-8884-67060C076A26
+    title: 老生报到注册
+    startDate: 2022-09-12
+    endDateExclusive: 2022-09-13
+    description: 2022-2023学年第一学期
+    sequence: 0
+    updatedAt: 20260622T062945Z
+  - id: imported-2022-09-14-2076cc350a
+    uid: F5B4FAD5-A352-45AA-8914-972B4968109C
+    title: 秋季学期开始上课
+    startDate: 2022-09-14
+    endDateExclusive: 2022-09-15
+    description: 2022-2023学年第一学期 第1周
+    sequence: 0
+    updatedAt: 20260622T062947Z
+  - id: imported-2022-09-30-0cfc36b744
+    uid: 1391D488-3B99-4014-9EA5-B05570F8F16F
+    title: 国庆节放假
+    startDate: 2022-09-30
+    endDateExclusive: 2022-10-07
+    description: 2022-2023学年第一学期
+    sequence: 0
+    updatedAt: 20260622T062949Z
+  - id: imported-2022-12-31-63a193117d
+    uid: 706B967F-052A-43D4-A2F0-06C6FACC993E
+    title: 元旦放假
+    startDate: 2022-12-31
+    endDateExclusive: 2023-01-02
+    description: 2022-2023学年第一学期
+    sequence: 0
+    updatedAt: 20260622T062951Z
+  - id: imported-2023-01-11-f4167da19f
+    uid: F8054ACD-FE72-4AA5-90CE-A849A01F1503
+    title: 期末考试周
+    startDate: 2023-01-11
+    endDateExclusive: 2023-01-18
+    description: 2022-2023学年第一学期（推测）
+    sequence: 0
+    updatedAt: 20260622T062954Z
+  - id: imported-2023-02-25-e609e43cbe
+    uid: CBA30313-38AC-4EE3-A2A1-6280DCAAFEC7
+    title: 春季学生报到注册
+    startDate: 2023-02-25
+    endDateExclusive: 2023-02-26
+    description: 2022-2023学年第二学期
+    sequence: 0
+    updatedAt: 20260622T062957Z
+  - id: imported-2023-03-02-89172c95e4
+    uid: A5755425-3EDC-4059-A928-37CF7D8E0096
+    title: 春季学期开始上课
+    startDate: 2023-03-02
+    endDateExclusive: 2023-03-03
+    description: 2022-2023学年第二学期 第1周
+    sequence: 0
+    updatedAt: 20260622T062959Z
+  - id: imported-2023-04-05-79191d6b98
+    uid: 8AC3A7EA-D88D-45A8-9FEF-8B84291C3307
+    title: 清明节放假
+    startDate: 2023-04-05
+    endDateExclusive: 2023-04-06
+    description: 2022-2023学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063002Z
+  - id: imported-2023-04-29-bc590923cc
+    uid: F559268C-6EFA-430A-A48A-94BFECAAC6B0
+    title: 劳动节放假
+    startDate: 2023-04-29
+    endDateExclusive: 2023-05-04
+    description: 2022-2023学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063005Z
+  - id: imported-2023-06-22-55a4d5ca0f
+    uid: 870B8836-EC37-425C-B83C-D9E9DFECA694
+    title: 端午节放假
+    startDate: 2023-06-22
+    endDateExclusive: 2023-06-25
+    description: 2022-2023学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063007Z
+  - id: imported-2023-07-03-722eb5b51a
+    uid: 9D6325E1-872E-4183-B3BE-40ED87FA6FDA
+    title: 期末考试周
+    startDate: 2023-07-03
+    endDateExclusive: 2023-07-10
+    description: 2022-2023学年第二学期（推测）
+    sequence: 0
+    updatedAt: 20260622T063010Z

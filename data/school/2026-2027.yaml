@@ -1,0 +1,197 @@
+schema: 1
+academicYear: 2026-2027
+importedFrom: https://ical.nbtca.space/
+events:
+  - id: imported-2026-08-29-125c63e515
+    uid: 30DA1F9A-A716-4FA9-8A45-AEE6D53B0CCB
+    title: 2026级本科新生报到注册
+    startDate: 2026-08-29
+    endDateExclusive: 2026-08-30
+    description: 萌新报到仪式，从今天起你就是宁理人了，记得先来计协认识一下大家。千里之行，始于足下——《道德经》
+    sequence: 0
+    updatedAt: 20260715T071508Z
+  - id: imported-2026-08-30-0b9300424d
+    uid: 58C5C7B0-1EDF-48BE-90E4-E1A73B02B6CF
+    title: 军训（2026级）
+    startDate: 2026-08-30
+    endDateExclusive: 2026-09-13
+    description: 两周晒黑套餐，附赠正步与军体拳；防晒霜记得涂厚一点，多喝水。宝剑锋从磨砺出，梅花香自苦寒来，撑过去你就是合格大学生啦
+    sequence: 0
+    updatedAt: 20260715T071526Z
+  - id: imported-2026-09-11-38baa88848
+    uid: 3A521232-0E01-454A-8094-24F9D2783A90
+    title: 专升本及研究生新生、老生报到注册
+    startDate: 2026-09-11
+    endDateExclusive: 2026-09-12
+    description: 老生收心，新同学报到，假期正式画上句号
+    sequence: 0
+    updatedAt: 20260715T070917Z
+  - id: imported-2026-09-12-8c8897cee8
+    uid: 6E6B3259-5005-4327-8540-7D43D8A1EAAB
+    title: 补考
+    startDate: 2026-09-12
+    endDateExclusive: 2026-09-17
+    description: 上学期没过的科目，这周还有一次翻盘机会；真没考好也别太苛责自己。「Ever tried. Ever failed. No
+      matter. Try again. Fail again. Fail better.」——塞缪尔·贝克特
+    sequence: 0
+    updatedAt: 20260715T071528Z
+  - id: imported-2026-09-14-90c7eff327
+    uid: 8944E193-AFF7-4CC2-A107-FA8513BF3292
+    title: 秋季学期开始上课
+    startDate: 2026-09-14
+    endDateExclusive: 2026-09-15
+    description: 新学期第一课，闹钟记得往前调。「学而不思则罔，思而不学则殆」——《论语》
+    sequence: 0
+    updatedAt: 20260715T071531Z
+  - id: imported-2026-09-20-07bd664586
+    uid: C614D710-95F1-4120-970A-F7BC770983EE
+    title: 上第二周(周五)的课
+    startDate: 2026-09-20
+    endDateExclusive: 2026-09-21
+    description: 别懵，今天周日按第二周周五课表上课，闹钟照常响
+    sequence: 0
+    updatedAt: 20260715T070931Z
+  - id: imported-2026-09-24-50c3e8a1e2
+    uid: 54C36775-01CD-4772-8EFE-9AC0A3457BA2
+    title: 校庆日
+    startDate: 2026-09-24
+    endDateExclusive: 2026-09-25
+    description: 生日快乐，宁理！蛋糕不一定有，但祝福必须有。「大学之道，在明明德，在亲民，在止于至善」——《礼记·大学》
+    sequence: 0
+    updatedAt: 20260715T071534Z
+  - id: imported-2026-09-25-798b9485f7
+    uid: 0137EF81-143C-4926-9450-6075830A3C85
+    title: 中秋节放假
+    startDate: 2026-09-25
+    endDateExclusive: 2026-09-28
+    description: 月饼警告：吃多了不消化，作业也一样。但愿人长久，千里共婵娟——苏轼
+    sequence: 0
+    updatedAt: 20260715T071536Z
+  - id: imported-2026-10-01-03802c89b3
+    uid: C7355DBA-60FD-4354-9055-C2292980816A
+    title: 国庆节放假
+    startDate: 2026-10-01
+    endDateExclusive: 2026-10-08
+    description: 祖国生日七天乐，出去走走或原地躺平都算过节
+    sequence: 0
+    updatedAt: 20260715T070937Z
+  - id: imported-2026-10-10-819c88cce2
+    uid: C3D18DBA-2482-4FDE-9104-728B32DB3775
+    title: 上第七周(周五)的课
+    startDate: 2026-10-10
+    endDateExclusive: 2026-10-11
+    description: 周六变身周五，假期借的课时今天还
+    sequence: 0
+    updatedAt: 20260715T070955Z
+  - id: imported-2026-10-29-e94858be72
+    uid: 22885397-0DE6-4439-BD24-90D0B42C5BEA
+    title: 校运动会
+    startDate: 2026-10-29
+    endDateExclusive: 2026-10-31
+    description: 秋日运动会，能跑得动是本事，会摸鱼也是本事。更快、更高、更强——更团结，这是奥林匹克格言，送给每一位参赛或摸鱼的同学
+    sequence: 0
+    updatedAt: 20260715T071540Z
+  - id: imported-2027-01-01-14a32fd687
+    uid: B146B55A-3EE8-4D38-8D49-FC4FA299661E
+    title: 元旦放假
+    startDate: 2027-01-01
+    endDateExclusive: 2027-01-04
+    description: 新年三天档，充电快跑。凡是过去，皆为序章——莎士比亚
+    sequence: 0
+    updatedAt: 20260715T071557Z
+  - id: imported-2027-01-11-188dcb9a61
+    uid: FEF84CAD-F52B-4E71-A440-A74436C16933
+    title: 上第七周(周四)的课
+    startDate: 2027-01-11
+    endDateExclusive: 2027-01-12
+    description: 周一变身周四，假期欠的课时今天还
+    sequence: 0
+    updatedAt: 20260715T071004Z
+  - id: imported-2027-01-12-4706c647e4
+    uid: 9E99C820-B0C2-4FCA-A293-03F9216BC7C7
+    title: 上第十六周(周五)的课
+    startDate: 2027-01-12
+    endDateExclusive: 2027-01-13
+    description: 周二秒变周五，课表说了算
+    sequence: 0
+    updatedAt: 20260715T071007Z
+  - id: imported-2027-01-13-7522f14b5d
+    uid: 90436836-2441-4586-8F0C-61B07CADB2E2
+    title: 期末考试周
+    startDate: 2027-01-13
+    endDateExclusive: 2027-01-20
+    description: 复习周正式开打，图书馆一位难求；别为了刷夜伤了身体，考完记得奖励自己睡个好觉。凡杀不死我的，必使我更强大——尼采
+    sequence: 0
+    updatedAt: 20260715T071600Z
+  - id: imported-2027-01-20-bbc608ac86
+    uid: 9F2B400F-A896-4494-AB1F-194952A84B64
+    title: 寒假
+    startDate: 2027-01-20
+    endDateExclusive: 2027-02-26
+    description: 紧接期末考试周结束，止于下学期报到前一天，年味和摸鱼两不误。文武之道，一张一弛——《礼记》
+    sequence: 0
+    updatedAt: 20260715T071626Z
+  - id: imported-2027-02-26-243fd760a5
+    uid: AF6F9307-1EFB-4AE0-9A1D-255FBFDE4786
+    title: 春季学生报到注册
+    startDate: 2027-02-26
+    endDateExclusive: 2027-02-27
+    description: 寒假结束，收拾收拾回来搬砖
+    sequence: 0
+    updatedAt: 20260715T071019Z
+  - id: imported-2027-02-27-8cb1cbf994
+    uid: 78F6AC1D-C24E-4AC3-AE0C-77678736BEC5
+    title: 补考
+    startDate: 2027-02-27
+    endDateExclusive: 2027-03-04
+    description: 开学第一周就补考，抓紧寒假最后的余温复习一下；结果不理想也没关系，下学期还有大把机会。「Fail better」——塞缪尔·贝克特
+    sequence: 0
+    updatedAt: 20260715T071604Z
+  - id: imported-2027-03-01-0ceb5f289f
+    uid: 007868C2-9814-4708-A547-B20F4919C5D9
+    title: 春季学期开始上课
+    startDate: 2027-03-01
+    endDateExclusive: 2027-03-02
+    description: 春季学期开幕，愿你的课表和心情一样元气满满。一年之计在于春
+    sequence: 0
+    updatedAt: 20260715T071606Z
+  - id: imported-2027-04-05-5b1c6c4055
+    uid: 1FB084B6-2DB4-4867-9C1F-64E9F4FE1434
+    title: 清明节放假
+    startDate: 2027-04-05
+    endDateExclusive: 2027-04-06
+    description: 小长假蹭一下，具体安排以国务院公布通知为准，别急着把票定死。清明时节雨纷纷，路上行人欲断魂——杜牧
+    sequence: 0
+    updatedAt: 20260715T071609Z
+  - id: imported-2027-05-01-ba8f75dde0
+    uid: B20B3C39-AD9E-405C-B87D-84298F55D683
+    title: 劳动节放假
+    startDate: 2027-05-01
+    endDateExclusive: 2027-05-02
+    description: 打工人的节日，允许自己躺一天，具体安排以国务院公布通知为准。劳动创造美好生活
+    sequence: 0
+    updatedAt: 20260715T071611Z
+  - id: imported-2027-06-03-f0d7bac2d4
+    uid: 70A563B6-1A5A-4C1F-853D-79D5D20988D5
+    title: 毕业典礼暨学位授予仪式
+    startDate: 2027-06-03
+    endDateExclusive: 2027-06-09
+    description: 学长学姐们毕业快乐，记得回协会打个卡再走。长风破浪会有时，直挂云帆济沧海——李白
+    sequence: 0
+    updatedAt: 20260715T071614Z
+  - id: imported-2027-06-09-32c91746db
+    uid: A6119B36-CC27-4C5D-BCEC-F1ED54B88B20
+    title: 端午节放假
+    startDate: 2027-06-09
+    endDateExclusive: 2027-06-10
+    description: 甜党咸党吵归吵，假期都一样香，具体安排以国务院公布通知为准。路漫漫其修远兮，吾将上下而求索——屈原，端午正是纪念他的日子
+    sequence: 0
+    updatedAt: 20260715T071617Z
+  - id: imported-2027-06-21-e9adcdf4d3
+    uid: 2CA91E32-24F4-4BDD-9403-6513B062AFEF
+    title: 机动周
+    startDate: 2027-06-21
+    endDateExclusive: 2027-06-26
+    description: 机动周不是摸鱼周，之前调课欠的都在这还；期末考试紧随其后，具体日期校方还没公布，别自己先焦虑。船到桥头自然直，安心等通知就好
+    sequence: 0
+    updatedAt: 20260715T071621Z
