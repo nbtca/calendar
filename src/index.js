@@ -30,6 +30,25 @@ export default {
     }
 
     const { pathname } = new URL(request.url);
+    if (pathname === "/school.ics") {
+      const asset = await env.ASSETS.fetch(request);
+      if (!asset.ok) return plainText("School calendar unavailable", 502);
+
+      const headers = new Headers(asset.headers);
+      headers.set("Content-Type", "text/calendar; charset=utf-8");
+      headers.set("Content-Disposition", "inline; filename=nbtca-school.ics");
+      headers.set("Cache-Control", "public, max-age=300, must-revalidate");
+      headers.set("X-Content-Type-Options", "nosniff");
+      for (const [name, value] of Object.entries(CORS_HEADERS)) {
+        headers.set(name, value);
+      }
+
+      return new Response(request.method === "HEAD" ? null : asset.body, {
+        status: 200,
+        headers,
+      });
+    }
+
     if (!PROXY_PATHS.has(pathname)) {
       return plainText("Not Found", 404);
     }

@@ -3,6 +3,15 @@ import test from "node:test";
 import worker from "../src/index.js";
 
 const env = { EVENTS_CALENDAR_URL: "https://calendar.example/events.ics" };
+const schoolEnv = {
+  ...env,
+  ASSETS: {
+    fetch: async () =>
+      new Response("BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n", {
+        headers: { ETag: '"school-v1"', "Content-Type": "text/calendar" },
+      }),
+  },
+};
 
 test("answers preflight without fetching the calendar", async () => {
   const response = await worker.fetch(
@@ -20,6 +29,17 @@ test("rejects unsupported methods", async () => {
   );
   assert.equal(response.status, 405);
   assert.equal(response.headers.get("Allow"), "GET, HEAD, OPTIONS");
+});
+
+test("serves the school calendar through the static asset binding", async () => {
+  const response = await worker.fetch(
+    new Request("https://ical.example/school.ics"),
+    schoolEnv,
+  );
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("ETag"), '"school-v1"');
+  assert.equal(response.headers.get("Access-Control-Allow-Origin"), "*");
+  assert.match(await response.text(), /BEGIN:VCALENDAR/);
 });
 
 test("streams successful upstream calendar responses", async (context) => {
