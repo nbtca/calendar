@@ -6,6 +6,9 @@
   "account_id": "a415a3ae7a197093d02233755d38800b",
   "workers_dev": true,
   "preview_urls": true,
+  "build": {
+    "command": "pnpm build"
+  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
