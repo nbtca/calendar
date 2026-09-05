@@ -109,7 +109,7 @@ export function generateCalendar(events) {
     "PRODID:-//NBTCA//School Calendar//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    property("X-WR-CALNAME", escapeText("NBTCA 学校日历")),
+    property("X-WR-CALNAME", escapeText("浙大宁波理工学院校历")),
     "X-WR-TIMEZONE:Asia/Shanghai",
     "REFRESH-INTERVAL;VALUE=DURATION:PT6H",
     "X-PUBLISHED-TTL:PT6H",
