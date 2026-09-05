@@ -1,0 +1,124 @@
+schema: 1
+academicYear: 2023-2024
+importedFrom: https://ical.nbtca.space/
+events:
+  - id: imported-2023-08-30-e6fb5d69e5
+    uid: EFD2DC51-A53D-4FC3-9B73-6F61E8421EBB
+    title: 军训（2022级）
+    startDate: 2023-08-30
+    endDateExclusive: 2023-09-15
+    description: 2023-2024学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063012Z
+  - id: imported-2023-09-15-9d088852e3
+    uid: F1889964-C9B1-4EFC-8BE2-44C98BC5E8FA
+    title: 老生报到注册·学年总结
+    startDate: 2023-09-15
+    endDateExclusive: 2023-09-16
+    description: 2023-2024学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063015Z
+  - id: imported-2023-09-16-19a4d3aa4c
+    uid: A84E33C7-D621-4F0F-8C0F-35AF4BCB3554
+    title: 2023级新生报到注册
+    startDate: 2023-09-16
+    endDateExclusive: 2023-09-17
+    description: 2023-2024学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063017Z
+  - id: imported-2023-09-18-d120b71026
+    uid: 07D0D3ED-24A1-47D9-85F0-F1B2ED990B97
+    title: 秋季学期开始上课
+    startDate: 2023-09-18
+    endDateExclusive: 2023-09-19
+    description: 2023-2024学年第一学期 第1周
+    sequence: 0
+    updatedAt: 20260622T063020Z
+  - id: imported-2023-09-29-6400df5611
+    uid: E98107C4-230E-43B6-A6C3-521CFBB7040B
+    title: 国庆节/中秋节放假
+    startDate: 2023-09-29
+    endDateExclusive: 2023-10-07
+    description: 2023-2024学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063023Z
+  - id: imported-2023-10-26-56acba798b
+    uid: 45605FDC-F7D0-4F0C-8F82-D39083A172BB
+    title: 校运动会
+    startDate: 2023-10-26
+    endDateExclusive: 2023-10-28
+    description: 2023-2024学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063025Z
+  - id: imported-2023-12-30-289b69595c
+    uid: 5F7AE5F5-5A3C-4C10-9B97-4BF83C72200F
+    title: 元旦放假
+    startDate: 2023-12-30
+    endDateExclusive: 2024-01-02
+    description: 2023-2024学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063027Z
+  - id: imported-2024-01-17-f69bbec6d6
+    uid: EF38ED7D-8025-4A5C-83B0-50AA10FCFE58
+    title: 期末考试周
+    startDate: 2024-01-17
+    endDateExclusive: 2024-01-24
+    description: 2023-2024学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063029Z
+  - id: imported-2024-02-25-c6e49525a2
+    uid: 2B7A64B2-A6C3-4670-89D2-7B1CBD4A6DC5
+    title: 军训（2023级）
+    startDate: 2024-02-25
+    endDateExclusive: 2024-03-09
+    description: 2023-2024学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063032Z
+  - id: imported-2024-03-08-a3ac040d12
+    uid: 4399A3C6-9B9F-4217-BBC8-495D0BBD86CA
+    title: 春季学生报到注册
+    startDate: 2024-03-08
+    endDateExclusive: 2024-03-09
+    description: 2023-2024学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063034Z
+  - id: imported-2024-03-11-74d4cdea26
+    uid: CCFDE3BB-6498-4743-856F-96A184C83CE4
+    title: 春季学期开始上课
+    startDate: 2024-03-11
+    endDateExclusive: 2024-03-12
+    description: 2023-2024学年第二学期 第1周
+    sequence: 0
+    updatedAt: 20260622T063036Z
+  - id: imported-2024-04-04-7c4f2a8e5b
+    uid: E1B7570F-2257-4ED1-A609-581572729851
+    title: 清明节放假
+    startDate: 2024-04-04
+    endDateExclusive: 2024-04-07
+    description: 2023-2024学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063038Z
+  - id: imported-2024-05-01-de9a9b903d
+    uid: 095B6585-35B3-47E1-BB9F-EA32F50A885A
+    title: 劳动节放假
+    startDate: 2024-05-01
+    endDateExclusive: 2024-05-06
+    description: 2023-2024学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063041Z
+  - id: imported-2024-06-08-7406650e4d
+    uid: 59321697-67E2-4CB9-85FB-757CB181A687
+    title: 端午节放假
+    startDate: 2024-06-08
+    endDateExclusive: 2024-06-11
+    description: 2023-2024学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063044Z
+  - id: imported-2024-07-04-de7b2eba00
+    uid: E17E5540-9B09-4E54-843D-C2BF6558CB94
+    title: 期末考试周
+    startDate: 2024-07-04
+    endDateExclusive: 2024-07-11
+    description: 2023-2024学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063046Z

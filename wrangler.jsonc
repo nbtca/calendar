@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ical",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-05",
+  "account_id": "a415a3ae7a197093d02233755d38800b",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./public"
+  },
+  "vars": {
+    "EVENTS_CALENDAR_URL": "https://calendar.google.com/calendar/ical/1b387d6005a1155845d61c56b518d1d4d4e8881e2937d7daac03bb8541cc1500%40group.calendar.google.com/public/basic.ics"
+  }
+}

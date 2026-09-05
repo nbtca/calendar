@@ -134,3 +134,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Wrangler local and dry-run output
+.wrangler/
+.wrangler-dry-run/

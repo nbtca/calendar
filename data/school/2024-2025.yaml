@@ -1,0 +1,140 @@
+schema: 1
+academicYear: 2024-2025
+importedFrom: https://ical.nbtca.space/
+events:
+  - id: imported-2024-08-24-efa89cbeab
+    uid: 36EE3A09-D654-4525-9958-BC43449548BA
+    title: 2024级新生报到注册
+    startDate: 2024-08-24
+    endDateExclusive: 2024-08-25
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063048Z
+  - id: imported-2024-08-25-9d2812811d
+    uid: F0D8BD98-2992-4358-95DB-D595C38A701E
+    title: 军训（2024级）
+    startDate: 2024-08-25
+    endDateExclusive: 2024-09-08
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063050Z
+  - id: imported-2024-09-06-2d67ed15c5
+    uid: FF74A6DD-6E6F-4C1F-ACDF-C95F364E189E
+    title: 老生报到注册·学年总结
+    startDate: 2024-09-06
+    endDateExclusive: 2024-09-07
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063052Z
+  - id: imported-2024-09-09-bb1df711fc
+    uid: A9B99774-FB4A-4367-BD17-0FB3AC34479A
+    title: 秋季学期开始上课
+    startDate: 2024-09-09
+    endDateExclusive: 2024-09-10
+    description: 2024-2025学年第一学期 第1周
+    sequence: 0
+    updatedAt: 20260622T063054Z
+  - id: imported-2024-09-15-c48624bfbc
+    uid: 36126075-CB11-4188-9DAC-CDC46E2FF7C7
+    title: 中秋节放假
+    startDate: 2024-09-15
+    endDateExclusive: 2024-09-18
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063057Z
+  - id: imported-2024-09-24-7fda94c86a
+    uid: F7C8B160-C938-4DD3-931E-81B1F9793136
+    title: 校庆日
+    startDate: 2024-09-24
+    endDateExclusive: 2024-09-25
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063100Z
+  - id: imported-2024-10-01-e7e708935d
+    uid: 75A4044C-C397-4A9A-82AF-91610AF7E954
+    title: 国庆节放假
+    startDate: 2024-10-01
+    endDateExclusive: 2024-10-08
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063102Z
+  - id: imported-2024-10-24-24b8b6ac76
+    uid: 72317D0F-0337-4FF3-A9A6-78CBAC73B93E
+    title: 校运动会
+    startDate: 2024-10-24
+    endDateExclusive: 2024-10-26
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063104Z
+  - id: imported-2025-01-01-6e752d6324
+    uid: 86A4E9F4-BC27-478D-8F84-BC05D919D426
+    title: 元旦放假
+    startDate: 2025-01-01
+    endDateExclusive: 2025-01-02
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063108Z
+  - id: imported-2025-01-08-7f62825e7a
+    uid: F39EE88F-C47B-4D10-A8D2-796C480E16DB
+    title: 期末考试周
+    startDate: 2025-01-08
+    endDateExclusive: 2025-01-15
+    description: 2024-2025学年第一学期
+    sequence: 0
+    updatedAt: 20260622T063111Z
+  - id: imported-2025-02-21-29032de577
+    uid: 59D0FDCA-05D4-4896-82F8-D1ECC182819B
+    title: 春季学生报到注册
+    startDate: 2025-02-21
+    endDateExclusive: 2025-02-22
+    description: 2024-2025学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063113Z
+  - id: imported-2025-02-24-cfb8a9d292
+    uid: 7FB40CB6-0300-413D-8B1B-985F40EAE951
+    title: 春季学期开始上课
+    startDate: 2025-02-24
+    endDateExclusive: 2025-02-25
+    description: 2024-2025学年第二学期 第1周
+    sequence: 0
+    updatedAt: 20260622T063116Z
+  - id: imported-2025-04-04-f195f5ec1d
+    uid: A5F9B828-798A-4AB9-8BE6-19BACDCC679E
+    title: 清明节放假
+    startDate: 2025-04-04
+    endDateExclusive: 2025-04-07
+    description: 2024-2025学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063118Z
+  - id: imported-2025-05-01-3522ee3fbb
+    uid: EF3D826F-5244-45EB-B768-BFA0006DD5EF
+    title: 劳动节放假
+    startDate: 2025-05-01
+    endDateExclusive: 2025-05-06
+    description: 2024-2025学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063121Z
+  - id: imported-2025-05-31-301844117a
+    uid: E71DC3B8-956D-4BF6-9B77-CCDFB7DB1EDD
+    title: 端午节放假
+    startDate: 2025-05-31
+    endDateExclusive: 2025-06-03
+    description: 2024-2025学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063123Z
+  - id: imported-2025-06-05-df395de267
+    uid: 6617F571-47D3-40A0-B3F8-BA0C45B2003E
+    title: 毕业典礼暨学位授予仪式
+    startDate: 2025-06-05
+    endDateExclusive: 2025-06-13
+    description: 2024-2025学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063126Z
+  - id: imported-2025-06-20-9728cf20c4
+    uid: 93AD6F4D-22AE-45FD-8737-DFC5D2C17892
+    title: 期末考试周
+    startDate: 2025-06-20
+    endDateExclusive: 2025-06-27
+    description: 2024-2025学年第二学期
+    sequence: 0
+    updatedAt: 20260622T063128Z

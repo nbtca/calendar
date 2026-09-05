@@ -1,0 +1,23 @@
+{
+  "name": "@nbtca/calendar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/generate.mjs",
+    "check": "node scripts/generate.mjs --check && node --test",
+    "dev": "pnpm build && wrangler dev",
+    "import:school": "node scripts/import-google-calendar.mjs",
+    "test": "node --test",
+    "deploy": "pnpm check && wrangler deploy"
+  },
+  "devDependencies": {
+    "ical.js": "^2.2.1",
+    "wrangler": "^4.129.0",
+    "yaml": "^2.8.1"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.11.0"
+}
