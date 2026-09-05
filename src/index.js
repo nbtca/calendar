@@ -32,6 +32,13 @@ export default {
     const { pathname } = new URL(request.url);
     if (pathname === "/school.ics") {
       const asset = await env.ASSETS.fetch(request);
+      if (asset.status === 304) {
+        const headers = new Headers(asset.headers);
+        for (const [name, value] of Object.entries(CORS_HEADERS)) {
+          headers.set(name, value);
+        }
+        return new Response(null, { status: 304, headers });
+      }
       if (!asset.ok) return plainText("School calendar unavailable", 502);
 
       const headers = new Headers(asset.headers);

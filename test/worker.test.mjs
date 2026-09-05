@@ -42,6 +42,27 @@ test("serves the school calendar through the static asset binding", async () => 
   assert.match(await response.text(), /BEGIN:VCALENDAR/);
 });
 
+test("preserves static asset not-modified responses", async () => {
+  const conditionalEnv = {
+    ...env,
+    ASSETS: {
+      fetch: async () =>
+        new Response(null, {
+          status: 304,
+          headers: { ETag: '"school-v1"' },
+        }),
+    },
+  };
+  const response = await worker.fetch(
+    new Request("https://ical.example/school.ics", {
+      headers: { "If-None-Match": '"school-v1"' },
+    }),
+    conditionalEnv,
+  );
+  assert.equal(response.status, 304);
+  assert.equal(response.headers.get("ETag"), '"school-v1"');
+});
+
 test("streams successful upstream calendar responses", async (context) => {
   context.mock.method(globalThis, "fetch", async () =>
     new Response("BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n", {
