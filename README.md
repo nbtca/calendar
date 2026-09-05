@@ -25,6 +25,8 @@ pnpm dev
 
 The `DTEND` value in generated ICS is exclusive. Source data therefore uses the
 explicit field name `endDateExclusive` to avoid accidental off-by-one errors.
+The generated `dist/school.ics` is ignored by Git and is rebuilt from YAML for
+every check and deployment.
 
 ## Deployment
 

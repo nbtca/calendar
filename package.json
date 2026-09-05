@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/generate.mjs",
-    "check": "node scripts/generate.mjs --check && node --test",
+    "check": "pnpm build && node --test",
     "dev": "pnpm build && wrangler dev",
     "import:school": "node scripts/import-google-calendar.mjs",
     "test": "node --test",

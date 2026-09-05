@@ -16,7 +16,7 @@ test("generated school feed represents every source event exactly once", async (
     sourceEvents.push(...document.events);
   }
 
-  const generated = await readFile(path.join(root, "public", "school.ics"), "utf8");
+  const generated = await readFile(path.join(root, "dist", "school.ics"), "utf8");
   const calendar = new ICAL.Component(ICAL.parse(generated));
   const generatedEvents = calendar.getAllSubcomponents("vevent").map((component) =>
     new ICAL.Event(component),

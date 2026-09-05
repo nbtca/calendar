@@ -21,5 +21,5 @@ startDate: 2026-09-14
 endDateExclusive: 2026-09-15
 ```
 
-Run `pnpm build` after editing data, then commit the YAML source and generated
-`public/school.ics` together.
+Run `pnpm check` after editing data. The generated `dist/school.ics` is a build
+artifact and must not be edited or committed.
