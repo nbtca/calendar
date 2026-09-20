@@ -100,7 +100,7 @@ export default {
         signal: AbortSignal.timeout(10_000),
         cf: {
           cacheEverything: true,
-          cacheTtlByStatus: { "200-299": 300, "300-599": 0 },
+          cacheTtlByStatus: { "200-299": 900, "429": 900, "500-599": 0 },
         },
       });
 
