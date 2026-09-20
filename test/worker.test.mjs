@@ -116,3 +116,45 @@ test("rejects successful non-calendar upstream responses", async (context) => {
   );
   assert.equal(response.status, 502);
 });
+
+function stubCache(seed) {
+  const store = new Map(seed ? [[seed.url, seed.response]] : []);
+  globalThis.caches = {
+    default: {
+      match: async (key) => store.get(String(key))?.clone(),
+      put: async (key, response) => void store.set(String(key), response),
+    },
+  };
+  return store;
+}
+
+test("serves the last good calendar when the source fails", async (context) => {
+  const store = stubCache();
+  context.after(() => delete globalThis.caches);
+  context.mock.method(globalThis, "fetch", async () =>
+    new Response("BEGIN:VCALENDAR\r\nGOOD\r\nEND:VCALENDAR\r\n", {
+      headers: { ETag: '"v1"', "Content-Type": "text/calendar" },
+    }),
+  );
+
+  const first = await worker.fetch(new Request("https://ical.example/events.ics"), env);
+  assert.equal(first.status, 200);
+  assert.equal(store.size, 1);
+
+  context.mock.restoreAll();
+  context.mock.method(globalThis, "fetch", async () => new Response("no", { status: 503 }));
+
+  const second = await worker.fetch(new Request("https://ical.example/events.ics"), env);
+  assert.equal(second.status, 200);
+  assert.equal(second.headers.get("X-Calendar-Stale"), "1");
+  assert.match(await second.text(), /GOOD/);
+});
+
+test("still reports a gateway error when nothing was ever cached", async (context) => {
+  stubCache();
+  context.after(() => delete globalThis.caches);
+  context.mock.method(globalThis, "fetch", async () => new Response("no", { status: 503 }));
+
+  const response = await worker.fetch(new Request("https://ical.example/events.ics"), env);
+  assert.equal(response.status, 502);
+});

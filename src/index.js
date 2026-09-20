@@ -6,6 +6,36 @@ const CORS_HEADERS = {
 
 const PROXY_PATHS = new Set(["/", "/events.ics"]);
 
+const LAST_GOOD = "https://calendar.nbtca.invalid/last-good";
+
+function edgeCache() {
+  try {
+    return globalThis.caches?.default ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function remember(body, headers, ctx) {
+  const cache = edgeCache();
+  if (!cache) return;
+  const keep = new Headers(headers);
+  keep.set("Cache-Control", "public, max-age=86400");
+  const stored = cache.put(LAST_GOOD, new Response(body, { headers: keep })).catch(() => {});
+  ctx?.waitUntil?.(stored);
+}
+
+async function serveLastGood(method) {
+  const cache = edgeCache();
+  const cached = cache ? await cache.match(LAST_GOOD).catch(() => null) : null;
+  if (!cached) return plainText("Calendar source unavailable", 502);
+
+  const headers = new Headers(cached.headers);
+  headers.set("Cache-Control", "public, max-age=60");
+  headers.set("X-Calendar-Stale", "1");
+  return new Response(method === "HEAD" ? null : cached.body, { status: 200, headers });
+}
+
 function plainText(message, status, extraHeaders = {}) {
   return new Response(message, {
     status,
@@ -18,7 +48,7 @@ function plainText(message, status, extraHeaders = {}) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
@@ -70,12 +100,12 @@ export default {
         signal: AbortSignal.timeout(10_000),
         cf: {
           cacheEverything: true,
-          cacheTtl: 300,
+          cacheTtlByStatus: { "200-299": 300, "300-599": 0 },
         },
       });
 
       if (!upstream.ok) {
-        return plainText("Calendar source unavailable", 502);
+        return serveLastGood(request.method);
       }
 
       const headers = new Headers();
@@ -86,7 +116,7 @@ export default {
 
       const contentType = upstream.headers.get("Content-Type") || "";
       if (!contentType.toLowerCase().includes("text/calendar")) {
-        return plainText("Calendar source returned an unexpected response", 502);
+        return serveLastGood(request.method);
       }
 
       const filename = pathname === "/" ? "nbtca.ics" : "nbtca-events.ics";
@@ -97,17 +127,20 @@ export default {
         headers.set(name, value);
       }
 
+      const calendar = await upstream.text();
+      remember(calendar, headers, ctx);
+
       const etag = headers.get("ETag");
       if (etag && request.headers.get("If-None-Match") === etag) {
         return new Response(null, { status: 304, headers });
       }
 
-      return new Response(request.method === "HEAD" ? null : upstream.body, {
+      return new Response(request.method === "HEAD" ? null : calendar, {
         status: 200,
         headers,
       });
     } catch {
-      return plainText("Calendar source unavailable", 502);
+      return serveLastGood(request.method);
     }
   },
 };
