@@ -158,3 +158,52 @@ test("still reports a gateway error when nothing was ever cached", async (contex
   const response = await worker.fetch(new Request("https://ical.example/events.ics"), env);
   assert.equal(response.status, 502);
 });
+
+test("serves the project calendar from its own source", async (context) => {
+  let requested;
+  context.mock.method(globalThis, "fetch", async (url) => {
+    requested = String(url);
+    return new Response("BEGIN:VCALENDAR\r\nPROJECT\r\nEND:VCALENDAR\r\n", {
+      headers: { ETag: '"project-v1"', "Content-Type": "text/calendar" },
+    });
+  });
+  const response = await worker.fetch(new Request("https://ical.example/project.ics"), {
+    ...env,
+    PROJECT_CALENDAR_URL: "https://calendar.example/project.ics",
+  });
+  assert.equal(requested, "https://calendar.example/project.ics");
+  assert.equal(response.status, 200);
+  assert.equal(
+    response.headers.get("Content-Disposition"),
+    "inline; filename=nbtca-project.ics",
+  );
+  assert.match(await response.text(), /PROJECT/);
+});
+
+test("does not reuse the events calendar when the project source fails", async (context) => {
+  const store = stubCache();
+  context.after(() => delete globalThis.caches);
+  context.mock.method(globalThis, "fetch", async (url) => {
+    if (String(url).includes("project")) return new Response("no", { status: 503 });
+    return new Response("BEGIN:VCALENDAR\r\nEVENTS\r\nEND:VCALENDAR\r\n", {
+      headers: { "Content-Type": "text/calendar" },
+    });
+  });
+  const projectEnv = {
+    ...env,
+    PROJECT_CALENDAR_URL: "https://calendar.example/project.ics",
+  };
+
+  const events = await worker.fetch(new Request("https://ical.example/events.ics"), projectEnv);
+  assert.equal(events.status, 200);
+  assert.match(await events.text(), /EVENTS/);
+
+  const project = await worker.fetch(new Request("https://ical.example/project.ics"), projectEnv);
+  assert.equal(project.status, 502);
+  assert.equal(store.size, 1);
+});
+
+test("reports a configuration error when the project source is absent", async () => {
+  const response = await worker.fetch(new Request("https://ical.example/project.ics"), env);
+  assert.equal(response.status, 503);
+});

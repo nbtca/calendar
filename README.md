@@ -5,10 +5,15 @@ Calendar feeds for NBTCA, served from one Cloudflare Worker at
 
 ## Routes
 
-- `/` preserves the existing combined Google Calendar feed during migration.
-- `/events.ics` proxies the configured Google Calendar. Until the source
-  calendar is separated, this contains the same combined data as `/`.
+- `/` preserves the existing daily-affairs subscription during migration.
+  Its content matches `/events.ics`.
+- `/events.ics` proxies the association Google Calendar, `NBTCA 计算机协会日历`.
+  Subscribe with `webcal://ical.nbtca.space/events.ics`.
 - `/school.ics` is generated from the reviewed files in `data/school/`.
+  Subscribe with `webcal://ical.nbtca.space/school.ics`.
+- `/project.ics` proxies the public project-schedule Google Calendar.
+  Subscribe with `webcal://ical.nbtca.space/project.ics`. Each proxied feed
+  keeps its own last-good copy, so one source failing cannot replace another.
 
 Birthday publication and access control are intentionally out of scope until a
 privacy policy is agreed.
