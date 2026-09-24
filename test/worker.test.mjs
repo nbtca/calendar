@@ -159,51 +159,94 @@ test("still reports a gateway error when nothing was ever cached", async (contex
   assert.equal(response.status, 502);
 });
 
-test("serves the project calendar from its own source", async (context) => {
+function projectNode() {
+  return {
+    id: "PVTI_project",
+    updatedAt: "2026-09-24T00:00:00Z",
+    content: {
+      __typename: "Issue",
+      title: "工牌形态和制式确定",
+      url: "https://github.com/nbtca/Roadmap/issues/80",
+      number: 80,
+      repository: { nameWithOwner: "nbtca/Roadmap" },
+    },
+    fieldValues: {
+      nodes: [
+        {
+          __typename: "ProjectV2ItemFieldDateValue",
+          date: "2026-09-25",
+          field: { name: "Start date" },
+        },
+        {
+          __typename: "ProjectV2ItemFieldDateValue",
+          date: "2026-09-30",
+          field: { name: "End date" },
+        },
+      ],
+    },
+  };
+}
+
+function projectEnv() {
+  return { ...env, GITHUB_TOKEN: "github-token" };
+}
+
+test("generates the project calendar from GitHub project dates", async (context) => {
   let requested;
-  context.mock.method(globalThis, "fetch", async (url) => {
+  context.mock.method(globalThis, "fetch", async (url, options) => {
     requested = String(url);
-    return new Response("BEGIN:VCALENDAR\r\nPROJECT\r\nEND:VCALENDAR\r\n", {
-      headers: { ETag: '"project-v1"', "Content-Type": "text/calendar" },
+    assert.equal(options.headers.Authorization, "Bearer github-token");
+    return Response.json({
+      data: {
+        organization: {
+          projectV2: {
+            items: {
+              pageInfo: { hasNextPage: false, endCursor: null },
+              nodes: [projectNode()],
+            },
+          },
+        },
+      },
     });
   });
-  const response = await worker.fetch(new Request("https://ical.example/project.ics"), {
-    ...env,
-    PROJECT_CALENDAR_URL: "https://calendar.example/project.ics",
-  });
-  assert.equal(requested, "https://calendar.example/project.ics");
+  const response = await worker.fetch(
+    new Request("https://ical.example/project.ics"),
+    projectEnv(),
+  );
+  assert.equal(requested, "https://api.github.com/graphql");
   assert.equal(response.status, 200);
   assert.equal(
     response.headers.get("Content-Disposition"),
     "inline; filename=nbtca-project.ics",
   );
-  assert.match(await response.text(), /PROJECT/);
+  const body = await response.text();
+  assert.match(body, /X-WR-CALNAME:NBTCA 项目推进/);
+  assert.match(body, /SUMMARY:工牌形态和制式确定/);
+  assert.match(body, /DTSTART;VALUE=DATE:20260925/);
+  assert.match(body, /DTEND;VALUE=DATE:20261001/);
+  assert.match(body, /UID:PVTI_project@project\.nbtca\.space/);
 });
 
-test("does not reuse the events calendar when the project source fails", async (context) => {
+test("does not reuse the events calendar when project generation fails", async (context) => {
   const store = stubCache();
   context.after(() => delete globalThis.caches);
   context.mock.method(globalThis, "fetch", async (url) => {
-    if (String(url).includes("project")) return new Response("no", { status: 503 });
+    if (String(url).includes("github.com")) return new Response("no", { status: 503 });
     return new Response("BEGIN:VCALENDAR\r\nEVENTS\r\nEND:VCALENDAR\r\n", {
       headers: { "Content-Type": "text/calendar" },
     });
   });
-  const projectEnv = {
-    ...env,
-    PROJECT_CALENDAR_URL: "https://calendar.example/project.ics",
-  };
 
-  const events = await worker.fetch(new Request("https://ical.example/events.ics"), projectEnv);
+  const events = await worker.fetch(new Request("https://ical.example/events.ics"), projectEnv());
   assert.equal(events.status, 200);
   assert.match(await events.text(), /EVENTS/);
 
-  const project = await worker.fetch(new Request("https://ical.example/project.ics"), projectEnv);
+  const project = await worker.fetch(new Request("https://ical.example/project.ics"), projectEnv());
   assert.equal(project.status, 502);
   assert.equal(store.size, 1);
 });
 
-test("reports a configuration error when the project source is absent", async () => {
+test("reports a configuration error when the project token is absent", async () => {
   const response = await worker.fetch(new Request("https://ical.example/project.ics"), env);
   assert.equal(response.status, 503);
 });

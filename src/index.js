@@ -1,3 +1,7 @@
+import { generateCalendar } from "../scripts/lib/ics.mjs";
+import { listProjectItems } from "../sync/src/github.js";
+import { projectCalendarEvents } from "../sync/src/plan.js";
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
@@ -15,12 +19,9 @@ const FEEDS = {
     filename: "nbtca-events.ics",
     cacheKey: "https://calendar.nbtca.invalid/last-good-events",
   },
-  "/project.ics": {
-    source: "PROJECT_CALENDAR_URL",
-    filename: "nbtca-project.ics",
-    cacheKey: "https://calendar.nbtca.invalid/last-good-project",
-  },
 };
+
+const PROJECT_CACHE_KEY = "https://calendar.nbtca.invalid/last-good-project";
 
 function edgeCache() {
   try {
@@ -59,6 +60,51 @@ function plainText(message, status, extraHeaders = {}) {
       ...extraHeaders,
     },
   });
+}
+
+async function strongEtag(body) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(body));
+  const hex = [...new Uint8Array(digest)]
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+  return `"${hex.slice(0, 32)}"`;
+}
+
+function projectNumber(env) {
+  const number = Number(env.GITHUB_PROJECT_NUMBER || 5);
+  if (!Number.isInteger(number) || number <= 0) return null;
+  return number;
+}
+
+async function serveProjectCalendar(request, env, ctx) {
+  if (!env.GITHUB_TOKEN) return plainText("Calendar source is not configured", 503);
+  const owner = env.GITHUB_PROJECT_OWNER || "nbtca";
+  const number = projectNumber(env);
+  if (!number) return plainText("Calendar source is not configured", 503);
+
+  try {
+    const items = await listProjectItems(fetch, env, owner, number);
+    const calendar = generateCalendar(projectCalendarEvents(items, owner, number), {
+      prodid: "-//NBTCA//Project Calendar//EN",
+      name: "NBTCA 项目推进",
+      category: "PROJECT",
+      refresh: "PT1H",
+    });
+    const headers = new Headers({
+      "Content-Type": "text/calendar; charset=utf-8",
+      "Content-Disposition": "inline; filename=nbtca-project.ics",
+      "Cache-Control": "public, max-age=300, s-maxage=300",
+      ETag: await strongEtag(calendar),
+      ...CORS_HEADERS,
+    });
+    remember(PROJECT_CACHE_KEY, calendar, headers, ctx);
+    if (headers.get("ETag") === request.headers.get("If-None-Match")) {
+      return new Response(null, { status: 304, headers });
+    }
+    return new Response(request.method === "HEAD" ? null : calendar, { status: 200, headers });
+  } catch {
+    return serveLastGood(PROJECT_CACHE_KEY, request.method);
+  }
 }
 
 async function proxyCalendar(request, sourceUrl, filename, cacheKey, ctx) {
@@ -149,6 +195,8 @@ export default {
         headers,
       });
     }
+
+    if (pathname === "/project.ics") return serveProjectCalendar(request, env, ctx);
 
     const feed = FEEDS[pathname];
     if (!feed) return plainText("Not Found", 404);

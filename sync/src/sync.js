@@ -1,8 +1,8 @@
+import { listProjectItems } from "./github.js";
 import {
   diffCalendar,
   googleEventBody,
   projectMarker,
-  readProjectItem,
   toDesiredEvent,
 } from "./plan.js";
 
@@ -13,50 +13,6 @@ const REQUIRED = [
   "GOOGLE_REFRESH_TOKEN",
   "GOOGLE_CALENDAR_ID",
 ];
-
-const ITEMS_QUERY = `
-  query($login: String!, $number: Int!, $cursor: String) {
-    organization(login: $login) {
-      projectV2(number: $number) {
-        items(first: 50, after: $cursor) {
-          pageInfo { hasNextPage endCursor }
-          nodes {
-            id
-            content {
-              __typename
-              ... on Issue {
-                title
-                url
-                number
-                repository { nameWithOwner }
-              }
-              ... on DraftIssue { title }
-              ... on PullRequest {
-                title
-                url
-                number
-                repository { nameWithOwner }
-              }
-            }
-            fieldValues(first: 40) {
-              nodes {
-                __typename
-                ... on ProjectV2ItemFieldDateValue {
-                  date
-                  field { ... on ProjectV2FieldCommon { name } }
-                }
-                ... on ProjectV2ItemFieldSingleSelectValue {
-                  name
-                  field { ... on ProjectV2FieldCommon { name } }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
 function missingEnv(env) {
   return REQUIRED.filter((name) => !env?.[name]);
@@ -98,41 +54,6 @@ async function googlePayload(response) {
   const error = new Error(`Google Calendar ${response.status}: ${message}`);
   error.status = response.status;
   throw error;
-}
-
-async function listDatedItems(fetchImpl, env, owner, number) {
-  const items = [];
-  let cursor = null;
-  do {
-    const response = await fetchImpl("https://api.github.com/graphql", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-        "Content-Type": "application/json",
-        "User-Agent": "nbtca-project-calendar",
-      },
-      body: JSON.stringify({
-        query: ITEMS_QUERY,
-        variables: { login: owner, number, cursor },
-      }),
-    });
-    const payload = await readJson(response);
-    if (!response.ok || payload.errors) {
-      const message =
-        payload.errors?.map((error) => error.message).join("; ") ||
-        payload.message ||
-        response.status;
-      throw new Error(`GitHub project query failed: ${message}`);
-    }
-    const project = payload.data?.organization?.projectV2;
-    if (!project) throw new Error(`GitHub project ${owner}/${number} was not found`);
-    for (const node of project.items.nodes) {
-      const item = readProjectItem(node);
-      if (item) items.push(item);
-    }
-    cursor = project.items.pageInfo.hasNextPage ? project.items.pageInfo.endCursor : null;
-  } while (cursor);
-  return items;
 }
 
 async function listEvents(fetchImpl, accessToken, calendarId) {
@@ -186,7 +107,7 @@ export async function syncProjectCalendar(env, options = {}) {
   const fetchImpl = options.fetchImpl ?? fetch;
   const marker = projectMarker(owner, number);
   const accessToken = await refreshAccessToken(fetchImpl, env);
-  const items = await listDatedItems(fetchImpl, env, owner, number);
+  const items = await listProjectItems(fetchImpl, env, owner, number);
   const desired = items.map((item) => toDesiredEvent(item, owner, number)).filter(Boolean);
   const existing = await listEvents(fetchImpl, accessToken, env.GOOGLE_CALENDAR_ID);
   const plan = diffCalendar(desired, existing, marker);

@@ -16,6 +16,7 @@
   },
   "vars": {
     "EVENTS_CALENDAR_URL": "https://calendar.google.com/calendar/ical/1b387d6005a1155845d61c56b518d1d4d4e8881e2937d7daac03bb8541cc1500%40group.calendar.google.com/public/basic.ics",
-    "PROJECT_CALENDAR_URL": "https://calendar.google.com/calendar/ical/9ec422cb4f3939a82ae3dd68bedfb281485190ab45061884e69d1095624d6683%40group.calendar.google.com/public/basic.ics"
+    "GITHUB_PROJECT_OWNER": "nbtca",
+    "GITHUB_PROJECT_NUMBER": "5"
   }
 }

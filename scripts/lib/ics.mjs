@@ -16,6 +16,8 @@ export function unescapeText(value) {
     .replace(/\\\\/g, "\\");
 }
 
+const textEncoder = new TextEncoder();
+
 export function foldLine(line) {
   const chunks = [];
   let chunk = "";
@@ -23,7 +25,7 @@ export function foldLine(line) {
 
   for (const character of line) {
     const candidate = chunk + character;
-    if (Buffer.byteLength(candidate, "utf8") > limit && chunk) {
+    if (textEncoder.encode(candidate).byteLength > limit && chunk) {
       const trailingWhitespace = chunk.match(/\s+$/)?.[0] || "";
       if (trailingWhitespace) {
         chunk = chunk.slice(0, -trailingWhitespace.length);
@@ -97,22 +99,26 @@ export function validateEvents(events) {
   return events;
 }
 
-export function generateCalendar(events) {
+export function generateCalendar(events, options = {}) {
   validateEvents(events);
   const sorted = [...events].sort((left, right) =>
     left.startDate.localeCompare(right.startDate) || left.uid.localeCompare(right.uid),
   );
+  const prodid = options.prodid ?? "-//NBTCA//School Calendar//EN";
+  const name = options.name ?? "浙大宁波理工学院校历";
+  const category = options.category ?? "SCHOOL";
+  const refresh = options.refresh ?? "PT6H";
 
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//NBTCA//School Calendar//EN",
+    `PRODID:${prodid}`,
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    property("X-WR-CALNAME", escapeText("浙大宁波理工学院校历")),
+    property("X-WR-CALNAME", escapeText(name)),
     "X-WR-TIMEZONE:Asia/Shanghai",
-    "REFRESH-INTERVAL;VALUE=DURATION:PT6H",
-    "X-PUBLISHED-TTL:PT6H",
+    `REFRESH-INTERVAL;VALUE=DURATION:${refresh}`,
+    `X-PUBLISHED-TTL:${refresh}`,
   ];
 
   for (const event of sorted) {
@@ -135,7 +141,7 @@ export function generateCalendar(events) {
     lines.push(
       "TRANSP:TRANSPARENT",
       "STATUS:CONFIRMED",
-      "CATEGORIES:SCHOOL",
+      `CATEGORIES:${category}`,
       "END:VEVENT",
     );
   }

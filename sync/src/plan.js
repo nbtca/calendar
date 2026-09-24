@@ -44,6 +44,7 @@ export function readProjectItem(node) {
     status,
     start,
     end,
+    updatedAt: node.updatedAt || null,
   };
 }
 
@@ -78,6 +79,25 @@ export function toDesiredEvent(item, owner, number) {
     endDateExclusive: range.endDateExclusive,
     sourceUrl: item.url,
   };
+}
+
+export function projectCalendarEvents(items, owner, number) {
+  const events = [];
+  for (const item of items) {
+    const desired = toDesiredEvent(item, owner, number);
+    if (!desired || desired.error || !item.updatedAt) continue;
+    events.push({
+      id: item.itemId,
+      uid: `${item.itemId}@project.nbtca.space`,
+      title: desired.summary,
+      description: desired.description,
+      startDate: desired.startDate,
+      endDateExclusive: desired.endDateExclusive,
+      sequence: 0,
+      updatedAt: item.updatedAt,
+    });
+  }
+  return events;
 }
 
 export function googleEventBody(desired, marker) {
