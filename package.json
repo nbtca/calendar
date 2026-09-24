@@ -8,8 +8,10 @@
     "check": "pnpm build && node --test",
     "dev": "wrangler dev",
     "import:school": "node scripts/import-google-calendar.mjs",
+    "sync": "node sync/run.js",
     "test": "node --test",
-    "deploy": "pnpm check && wrangler deploy"
+    "deploy": "pnpm check && wrangler deploy",
+    "deploy:sync": "pnpm check && wrangler deploy -c sync/wrangler.jsonc"
   },
   "devDependencies": {
     "ical.js": "^2.2.1",
