@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { diffCalendar, readProjectItem, toDesiredEvent } from "../sync/src/plan.js";
+import { generateCalendar } from "../scripts/lib/ics.mjs";
+import { diffCalendar, projectCalendarEvents, readProjectItem, toDesiredEvent } from "../sync/src/plan.js";
 import { syncProjectCalendar } from "../sync/src/sync.js";
 
 const env = {
@@ -99,6 +100,33 @@ test("keeps an inclusive project end date and a one-day event when only one date
   );
   assert.equal(deadline.startDate, "2026-05-31");
   assert.equal(deadline.endDateExclusive, "2026-06-01");
+});
+
+test("renders dated project items as a website calendar", () => {
+  const item = readProjectItem({
+    id: "PVTI_range",
+    updatedAt: "2026-09-24T01:02:03Z",
+    content: {
+      title: "工牌形态和制式确定",
+      url: "https://github.com/nbtca/Roadmap/issues/80",
+      number: 80,
+      repository: { nameWithOwner: "nbtca/Roadmap" },
+    },
+    fieldValues: {
+      nodes: [
+        { __typename: "ProjectV2ItemFieldDateValue", date: "2026-09-25", field: { name: "Start date" } },
+        { __typename: "ProjectV2ItemFieldDateValue", date: "2026-09-30", field: { name: "End date" } },
+      ],
+    },
+  });
+  const calendar = generateCalendar(projectCalendarEvents([item], "nbtca", 5), {
+    prodid: "-//NBTCA//Project Calendar//EN",
+    name: "NBTCA 项目推进",
+    category: "PROJECT",
+  });
+  assert.match(calendar, /PRODID:-\/\/NBTCA\/\/Project Calendar\/\/EN/);
+  assert.match(calendar, /CATEGORIES:PROJECT/);
+  assert.match(calendar, /DTSTAMP:20260924T010203Z/);
 });
 
 test("reads only project items that have a start or end date", () => {

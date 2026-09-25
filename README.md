@@ -11,9 +11,11 @@ Calendar feeds for NBTCA, served from one Cloudflare Worker at
   Subscribe with `webcal://ical.nbtca.space/events.ics`.
 - `/school.ics` is generated from the reviewed files in `data/school/`.
   Subscribe with `webcal://ical.nbtca.space/school.ics`.
-- `/project.ics` proxies the public project-schedule Google Calendar.
-  Subscribe with `webcal://ical.nbtca.space/project.ics`. Each proxied feed
-  keeps its own last-good copy, so one source failing cannot replace another.
+- `/project.ics` is generated from NBTCA Project 5 items that have a Start
+  date or End date. Subscribe with `webcal://ical.nbtca.space/project.ics`.
+  The Worker needs a `GITHUB_TOKEN` secret with `read:project`. Each proxied
+  or generated feed keeps its own last-good copy, so one source failing
+  cannot replace another.
 
 Birthday publication and access control are intentionally out of scope until a
 privacy policy is agreed.
