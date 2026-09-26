@@ -250,3 +250,59 @@ test("reports a configuration error when the project token is absent", async () 
   const response = await worker.fetch(new Request("https://ical.example/project.ics"), env);
   assert.equal(response.status, 503);
 });
+function mockUpstream(context, headers = {}) {
+  context.mock.method(globalThis, "fetch", async () =>
+    new Response("BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n", {
+      headers: { "Content-Type": "text/calendar", ...headers },
+    }),
+  );
+}
+
+test("derives a stable ETag when the upstream sends none", async (context) => {
+  mockUpstream(context);
+  const first = await worker.fetch(new Request("https://ical.example/"), env);
+  const second = await worker.fetch(new Request("https://ical.example/"), env);
+  assert.match(first.headers.get("ETag"), /^"[0-9a-f]{32}"$/);
+  assert.equal(first.headers.get("ETag"), second.headers.get("ETag"));
+});
+
+test("answers a matching If-None-Match with 304", async (context) => {
+  mockUpstream(context);
+  const { headers } = await worker.fetch(new Request("https://ical.example/"), env);
+  const response = await worker.fetch(
+    new Request("https://ical.example/", { headers: { "If-None-Match": headers.get("ETag") } }),
+    env,
+  );
+  assert.equal(response.status, 304);
+  assert.equal(await response.text(), "");
+});
+
+test("answers an unchanged If-Modified-Since with 304", async (context) => {
+  mockUpstream(context, { "Last-Modified": "Sat, 26 Sep 2026 12:00:00 GMT" });
+  const unchanged = await worker.fetch(
+    new Request("https://ical.example/", {
+      headers: { "If-Modified-Since": "Sat, 26 Sep 2026 12:00:00 GMT" },
+    }),
+    env,
+  );
+  const older = await worker.fetch(
+    new Request("https://ical.example/", {
+      headers: { "If-Modified-Since": "Fri, 25 Sep 2026 12:00:00 GMT" },
+    }),
+    env,
+  );
+  assert.equal(unchanged.status, 304);
+  assert.equal(older.status, 200);
+});
+
+test("asks the runtime to gzip only for clients that accept it", async (context) => {
+  mockUpstream(context);
+  const gzip = await worker.fetch(
+    new Request("https://ical.example/", { headers: { "Accept-Encoding": "br, gzip" } }),
+    env,
+  );
+  const plain = await worker.fetch(new Request("https://ical.example/"), env);
+  assert.equal(gzip.headers.get("Content-Encoding"), "gzip");
+  assert.equal(plain.headers.get("Content-Encoding"), null);
+  assert.equal(plain.headers.get("Vary"), "Accept-Encoding");
+});
