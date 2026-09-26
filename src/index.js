@@ -40,15 +40,41 @@ function remember(cacheKey, body, headers, ctx) {
   ctx?.waitUntil?.(stored);
 }
 
-async function serveLastGood(cacheKey, method) {
+async function serveLastGood(cacheKey, request) {
   const cache = edgeCache();
   const cached = cache ? await cache.match(cacheKey).catch(() => null) : null;
   if (!cached) return plainText("Calendar source unavailable", 502);
 
   const headers = new Headers(cached.headers);
+  headers.delete("Content-Encoding");
   headers.set("Cache-Control", "public, max-age=60");
   headers.set("X-Calendar-Stale", "1");
-  return new Response(method === "HEAD" ? null : cached.body, { status: 200, headers });
+  return respond(request, await cached.text(), headers);
+}
+
+function isNotModified(request, headers) {
+  const opaque = (tag) => tag.trim().replace(/^W\//, "");
+  const etag = headers.get("ETag");
+  const ifNoneMatch = request.headers.get("If-None-Match");
+  if (ifNoneMatch) {
+    return (
+      Boolean(etag) &&
+      ifNoneMatch.split(",").some((tag) => tag.trim() === "*" || opaque(tag) === opaque(etag))
+    );
+  }
+  const since = Date.parse(request.headers.get("If-Modified-Since") ?? "");
+  const modified = Date.parse(headers.get("Last-Modified") ?? "");
+  return Number.isFinite(since) && Number.isFinite(modified) && modified <= since;
+}
+
+// Workers compress the body themselves when Content-Encoding is set on an unencoded response.
+function respond(request, body, headers) {
+  headers.set("Vary", "Accept-Encoding");
+  if (isNotModified(request, headers)) return new Response(null, { status: 304, headers });
+  if (/\bgzip\b/.test(request.headers.get("Accept-Encoding") ?? "")) {
+    headers.set("Content-Encoding", "gzip");
+  }
+  return new Response(request.method === "HEAD" ? null : body, { status: 200, headers });
 }
 
 function plainText(message, status, extraHeaders = {}) {
@@ -98,12 +124,9 @@ async function serveProjectCalendar(request, env, ctx) {
       ...CORS_HEADERS,
     });
     remember(PROJECT_CACHE_KEY, calendar, headers, ctx);
-    if (headers.get("ETag") === request.headers.get("If-None-Match")) {
-      return new Response(null, { status: 304, headers });
-    }
-    return new Response(request.method === "HEAD" ? null : calendar, { status: 200, headers });
+    return respond(request, calendar, headers);
   } catch {
-    return serveLastGood(PROJECT_CACHE_KEY, request.method);
+    return serveLastGood(PROJECT_CACHE_KEY, request);
   }
 }
 
@@ -120,7 +143,7 @@ async function proxyCalendar(request, sourceUrl, filename, cacheKey, ctx) {
       },
     });
 
-    if (!upstream.ok) return serveLastGood(cacheKey, request.method);
+    if (!upstream.ok) return serveLastGood(cacheKey, request);
 
     const headers = new Headers();
     for (const name of ["ETag", "Last-Modified"]) {
@@ -130,7 +153,7 @@ async function proxyCalendar(request, sourceUrl, filename, cacheKey, ctx) {
 
     const contentType = upstream.headers.get("Content-Type") || "";
     if (!contentType.toLowerCase().includes("text/calendar")) {
-      return serveLastGood(cacheKey, request.method);
+      return serveLastGood(cacheKey, request);
     }
 
     headers.set("Content-Type", "text/calendar; charset=utf-8");
@@ -141,19 +164,11 @@ async function proxyCalendar(request, sourceUrl, filename, cacheKey, ctx) {
     }
 
     const calendar = await upstream.text();
+    if (!headers.has("ETag")) headers.set("ETag", await strongEtag(calendar));
     remember(cacheKey, calendar, headers, ctx);
-
-    const etag = headers.get("ETag");
-    if (etag && request.headers.get("If-None-Match") === etag) {
-      return new Response(null, { status: 304, headers });
-    }
-
-    return new Response(request.method === "HEAD" ? null : calendar, {
-      status: 200,
-      headers,
-    });
+    return respond(request, calendar, headers);
   } catch {
-    return serveLastGood(cacheKey, request.method);
+    return serveLastGood(cacheKey, request);
   }
 }
 
