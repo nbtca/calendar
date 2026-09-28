@@ -38,6 +38,7 @@ export function readProjectItem(node) {
   if (!start && !end && !iteration) return null;
 
   const content = node.content ?? {};
+  if (content.state === "CLOSED" || content.state === "MERGED") return null;
   const status =
     values.find(
       (value) =>
