@@ -36,6 +36,12 @@ const ITEMS_QUERY = `
                   name
                   field { ... on ProjectV2FieldCommon { name } }
                 }
+                ... on ProjectV2ItemFieldIterationValue {
+                  title
+                  startDate
+                  duration
+                  field { ... on ProjectV2FieldCommon { name } }
+                }
               }
             }
           }

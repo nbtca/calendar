@@ -11,8 +11,10 @@ Calendar feeds for NBTCA, served from one Cloudflare Worker at
   Subscribe with `webcal://ical.nbtca.space/events.ics`.
 - `/school.ics` is generated from the reviewed files in `data/school/`.
   Subscribe with `webcal://ical.nbtca.space/school.ics`.
-- `/project.ics` is generated from NBTCA Project 5 items that have a Start
-  date or End date. Subscribe with `webcal://ical.nbtca.space/project.ics`.
+- `/project.ics` is generated from NBTCA Project 5. An item uses its Start
+  date and End date when either is set. Otherwise it uses its Iteration,
+  from the iteration start through its duration. Subscribe with
+  `webcal://ical.nbtca.space/project.ics`.
   The Worker needs a `GITHUB_TOKEN` secret with `read:project`. Each proxied
   or generated feed keeps its own last-good copy, so one source failing
   cannot replace another.
@@ -47,14 +49,15 @@ version `1487e0c0-a969-454f-8bcb-55f7f01876fb`.
 ## Project schedule sync
 
 `sync/` is a second Worker, `nbtca-project-calendar`. Every 15 minutes it reads
-organization project 5 and mirrors items with a Start date or End date onto a
-separate Google Calendar. `pnpm deploy` does not publish this Worker, and it
+organization project 5 and mirrors the same dated items as `/project.ics` onto
+a separate Google Calendar. `pnpm deploy` does not publish this Worker, and it
 does not add a route to `ical.nbtca.space`.
 
 A project end date is inclusive. Google Calendar's all-day end date is
 exclusive, matching `endDateExclusive` in the school calendar. An item with
-only one of the two dates becomes a one-day event. Items that lose both dates,
-and items that leave the project, have the event created by this sync removed.
+only one of the two dates becomes a one-day event. An iteration span ends
+after its duration. Items with neither dates nor an iteration, and items that
+leave the project, have the event created by this sync removed.
 Events on that calendar without this sync's private marker stay in place.
 
 Credentials stay in Worker secrets:

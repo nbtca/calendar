@@ -129,7 +129,53 @@ test("renders dated project items as a website calendar", () => {
   assert.match(calendar, /DTSTAMP:20260924T010203Z/);
 });
 
-test("reads only project items that have a start or end date", () => {
+test("uses the iteration span when an item has no dates", () => {
+  const item = readProjectItem({
+    id: "PVTI_iter",
+    updatedAt: "2026-09-01T00:00:00Z",
+    content: { title: "没有具体日期" },
+    fieldValues: {
+      nodes: [
+        {
+          __typename: "ProjectV2ItemFieldIterationValue",
+          title: "2026 FW",
+          startDate: "2026-09-01",
+          duration: 181,
+          field: { name: "Iteration" },
+        },
+      ],
+    },
+  });
+  const desired = toDesiredEvent(item, "nbtca", 5);
+  assert.equal(desired.startDate, "2026-09-01");
+  assert.equal(desired.endDateExclusive, "2027-03-01");
+  assert.match(desired.description, /Iteration: 2026 FW/);
+
+  const dated = readProjectItem({
+    id: "PVTI_both",
+    updatedAt: "2026-09-01T00:00:00Z",
+    content: { title: "有具体日期" },
+    fieldValues: {
+      nodes: [
+        { __typename: "ProjectV2ItemFieldDateValue", date: "2026-09-25", field: { name: "Start date" } },
+        { __typename: "ProjectV2ItemFieldDateValue", date: "2026-09-30", field: { name: "End date" } },
+        {
+          __typename: "ProjectV2ItemFieldIterationValue",
+          title: "2026 FW",
+          startDate: "2026-09-01",
+          duration: 181,
+          field: { name: "Iteration" },
+        },
+      ],
+    },
+  });
+  const explicit = toDesiredEvent(dated, "nbtca", 5);
+  assert.equal(explicit.startDate, "2026-09-25");
+  assert.equal(explicit.endDateExclusive, "2026-10-01");
+  assert.doesNotMatch(explicit.description, /Iteration:/);
+});
+
+test("skips items with neither dates nor an iteration", () => {
   assert.equal(readProjectItem(issueNode("PVTI_empty", "没有日期", null, null)), null);
   const item = readProjectItem(issueNode("PVTI_dated", "有日期", "2026-09-22", null, "In Progress"));
   assert.equal(item.start, "2026-09-22");

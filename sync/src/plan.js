@@ -1,6 +1,7 @@
 const START_FIELD = "Start date";
 const END_FIELD = "End date";
 const STATUS_FIELD = "Status";
+const ITERATION_FIELD = "Iteration";
 
 export function projectMarker(owner, number) {
   return `${owner}/projects/${number}`;
@@ -26,7 +27,15 @@ export function readProjectItem(node) {
     )?.date || null;
   const start = dated(START_FIELD);
   const end = dated(END_FIELD);
-  if (!start && !end) return null;
+  const iteration = values.find(
+    (value) =>
+      value?.__typename === "ProjectV2ItemFieldIterationValue" &&
+      value.field?.name === ITERATION_FIELD &&
+      value.startDate &&
+      Number.isInteger(value.duration) &&
+      value.duration > 0,
+  );
+  if (!start && !end && !iteration) return null;
 
   const content = node.content ?? {};
   const status =
@@ -44,22 +53,32 @@ export function readProjectItem(node) {
     status,
     start,
     end,
+    iterationTitle: iteration?.title || null,
+    iterationStart: iteration?.startDate || null,
+    iterationDuration: iteration?.duration || null,
     updatedAt: node.updatedAt || null,
   };
 }
 
-function inclusiveRange(start, end) {
-  const startDate = start || end;
-  const inclusiveEnd = end || start;
-  if (!startDate || !inclusiveEnd) return null;
-  if (inclusiveEnd < startDate) {
-    return { error: `end ${inclusiveEnd} is before start ${startDate}` };
+function inclusiveRange(item) {
+  if (item.start || item.end) {
+    const startDate = item.start || item.end;
+    const inclusiveEnd = item.end || item.start;
+    if (inclusiveEnd < startDate) {
+      return { error: `end ${inclusiveEnd} is before start ${startDate}` };
+    }
+    return { startDate, endDateExclusive: addDays(inclusiveEnd, 1), fromIteration: false };
   }
-  return { startDate, endDateExclusive: addDays(inclusiveEnd, 1) };
+  if (!item.iterationStart || !item.iterationDuration) return null;
+  return {
+    startDate: item.iterationStart,
+    endDateExclusive: addDays(item.iterationStart, item.iterationDuration),
+    fromIteration: true,
+  };
 }
 
 export function toDesiredEvent(item, owner, number) {
-  const range = inclusiveRange(item.start, item.end);
+  const range = inclusiveRange(item);
   if (!range) return null;
   if (range.error) return { itemId: item.itemId, error: range.error };
 
@@ -67,6 +86,7 @@ export function toDesiredEvent(item, owner, number) {
     item.url,
     item.repository && item.number != null ? `${item.repository}#${item.number}` : null,
     item.status ? `Status: ${item.status}` : null,
+    range.fromIteration && item.iterationTitle ? `Iteration: ${item.iterationTitle}` : null,
     `Project: ${projectUrl(owner, number)}`,
   ]
     .filter(Boolean)
