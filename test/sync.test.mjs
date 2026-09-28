@@ -175,6 +175,39 @@ test("uses the iteration span when an item has no dates", () => {
   assert.doesNotMatch(explicit.description, /Iteration:/);
 });
 
+test("omits closed issues and merged pull requests", () => {
+  const closed = readProjectItem({
+    id: "PVTI_closed",
+    updatedAt: "2026-09-01T00:00:00Z",
+    content: { title: "已关闭", state: "CLOSED" },
+    fieldValues: {
+      nodes: [
+        { __typename: "ProjectV2ItemFieldDateValue", date: "2026-09-25", field: { name: "Start date" } },
+        { __typename: "ProjectV2ItemFieldDateValue", date: "2026-09-30", field: { name: "End date" } },
+      ],
+    },
+  });
+  assert.equal(closed, null);
+
+  const merged = readProjectItem({
+    id: "PVTI_merged",
+    updatedAt: "2026-09-01T00:00:00Z",
+    content: { title: "已合并", state: "MERGED" },
+    fieldValues: {
+      nodes: [
+        {
+          __typename: "ProjectV2ItemFieldIterationValue",
+          title: "2026 FW",
+          startDate: "2026-09-01",
+          duration: 181,
+          field: { name: "Iteration" },
+        },
+      ],
+    },
+  });
+  assert.equal(merged, null);
+});
+
 test("skips items with neither dates nor an iteration", () => {
   assert.equal(readProjectItem(issueNode("PVTI_empty", "没有日期", null, null)), null);
   const item = readProjectItem(issueNode("PVTI_dated", "有日期", "2026-09-22", null, "In Progress"));

@@ -15,6 +15,7 @@ const ITEMS_QUERY = `
                 title
                 url
                 number
+                state
                 repository { nameWithOwner }
               }
               ... on DraftIssue { title }
@@ -22,6 +23,7 @@ const ITEMS_QUERY = `
                 title
                 url
                 number
+                state
                 repository { nameWithOwner }
               }
             }
