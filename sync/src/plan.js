@@ -1,6 +1,7 @@
 const START_FIELD = "Start date";
 const END_FIELD = "End date";
 const STATUS_FIELD = "Status";
+const PAUSED_STATUS = "Pause";
 const ITERATION_FIELD = "Iteration";
 
 export function projectMarker(owner, number) {
@@ -45,6 +46,7 @@ export function readProjectItem(node) {
         value?.__typename === "ProjectV2ItemFieldSingleSelectValue" &&
         value.field?.name === STATUS_FIELD,
     )?.name || null;
+  if (status === PAUSED_STATUS) return null;
   return {
     itemId: node.id,
     title: content.title || "(untitled)",

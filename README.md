@@ -14,7 +14,7 @@ Calendar feeds for NBTCA, served from one Cloudflare Worker at
 - `/project.ics` is generated from NBTCA Project 5. An item uses its Start
   date and End date when either is set. Otherwise it uses its Iteration,
   from the iteration start through its duration. Closed issues and pull
-  requests are left out. Subscribe with
+  requests, and items whose Status is Pause, are left out. Subscribe with
   `webcal://ical.nbtca.space/project.ics`.
   The Worker needs a `GITHUB_TOKEN` secret with `read:project`. Each proxied
   or generated feed keeps its own last-good copy, so one source failing
@@ -58,7 +58,7 @@ A project end date is inclusive. Google Calendar's all-day end date is
 exclusive, matching `endDateExclusive` in the school calendar. An item with
 only one of the two dates becomes a one-day event. An iteration span ends
 after its duration. Items with neither dates nor an iteration, closed issues and pull requests,
-and items that leave the project, have the event created by this sync removed.
+items whose Status is Pause, and items that leave the project, have the event created by this sync removed.
 Events on that calendar without this sync's private marker stay in place.
 
 Credentials stay in Worker secrets:

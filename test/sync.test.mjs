@@ -208,6 +208,41 @@ test("omits closed issues and merged pull requests", () => {
   assert.equal(merged, null);
 });
 
+test("omits items whose project status is Pause", () => {
+  assert.equal(
+    readProjectItem(issueNode("PVTI_pause", "已暂停", "2026-09-25", "2026-09-30", "Pause")),
+    null,
+  );
+  const pausedIteration = readProjectItem({
+    id: "PVTI_pause_iter",
+    updatedAt: "2026-09-01T00:00:00Z",
+    content: { title: "暂停且只有迭代", state: "OPEN" },
+    fieldValues: {
+      nodes: [
+        {
+          __typename: "ProjectV2ItemFieldIterationValue",
+          title: "2026 FW",
+          startDate: "2026-09-01",
+          duration: 181,
+          field: { name: "Iteration" },
+        },
+        {
+          __typename: "ProjectV2ItemFieldSingleSelectValue",
+          name: "Pause",
+          field: { name: "Status" },
+        },
+      ],
+    },
+  });
+  assert.equal(pausedIteration, null);
+
+  const done = readProjectItem(
+    issueNode("PVTI_done", "已完成但仍开放", "2026-09-25", null, "Done"),
+  );
+  assert.equal(done.status, "Done");
+  assert.equal(done.start, "2026-09-25");
+});
+
 test("skips items with neither dates nor an iteration", () => {
   assert.equal(readProjectItem(issueNode("PVTI_empty", "没有日期", null, null)), null);
   const item = readProjectItem(issueNode("PVTI_dated", "有日期", "2026-09-22", null, "In Progress"));
